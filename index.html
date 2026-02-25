@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Octodo Solutions — WhatsApp Coexistence Setup</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 600px;
+            width: 90%;
+            background: #1a1a1a;
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid #333;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .logo h1 {
+            font-size: 24px;
+            color: #25D366;
+        }
+        .logo p {
+            color: #888;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+        .steps {
+            background: #111;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+        .steps h3 {
+            color: #25D366;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        .steps ol {
+            padding-left: 20px;
+            line-height: 1.8;
+            font-size: 14px;
+            color: #aaa;
+        }
+        .steps li {
+            margin-bottom: 4px;
+        }
+        .btn-container {
+            text-align: center;
+            margin: 24px 0;
+        }
+        .signup-btn {
+            background-color: #1877f2;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: bold;
+            height: 48px;
+            padding: 0 32px;
+            transition: background 0.2s;
+        }
+        .signup-btn:hover {
+            background-color: #166fe5;
+        }
+        .signup-btn:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+        #status {
+            text-align: center;
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+            font-size: 14px;
+        }
+        #status.success {
+            display: block;
+            background: #0d3320;
+            color: #25D366;
+            border: 1px solid #25D366;
+        }
+        #status.error {
+            display: block;
+            background: #331111;
+            color: #ff4444;
+            border: 1px solid #ff4444;
+        }
+        #status.info {
+            display: block;
+            background: #1a2a3a;
+            color: #4da6ff;
+            border: 1px solid #4da6ff;
+        }
+        #details {
+            margin-top: 16px;
+            background: #111;
+            border-radius: 8px;
+            padding: 16px;
+            display: none;
+            font-size: 13px;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+            line-height: 1.6;
+        }
+        .warning {
+            background: #332200;
+            border: 1px solid #ffaa00;
+            color: #ffcc44;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .note {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>🟢 Octodo Solutions</h1>
+            <p>WhatsApp Coexistence Setup — Connect your existing number to Cloud API</p>
+        </div>
+
+        <div class="warning">
+            ⚠️ <strong>Before you start:</strong> Make sure the WhatsApp Business app on the founder's phone is updated to version 2.24.17 or higher. Have the phone ready — you may need to scan a QR code.
+        </div>
+
+        <div class="steps">
+            <h3>What will happen:</h3>
+            <ol>
+                <li>Click the button below to start Facebook Login</li>
+                <li>Log in with your Meta/Facebook account</li>
+                <li>Select your business portfolio <strong>"Octodo"</strong></li>
+                <li>Select WhatsApp Business Account <strong>"Octodo"</strong></li>
+                <li>Choose <strong>"Use existing WhatsApp Business App number"</strong></li>
+                <li>Scan the QR code from the founder's WhatsApp Business app</li>
+                <li>Done! Both app and Cloud API will work on the same number</li>
+            </ol>
+        </div>
+
+        <div class="btn-container">
+            <button class="signup-btn" onclick="launchWhatsAppSignup()">
+                🔗 Connect WhatsApp with Coexistence
+            </button>
+        </div>
+
+        <div id="status"></div>
+        <div id="details"></div>
+
+        <p class="note">This page uses Meta's official Embedded Signup SDK. No data is sent to any third party.</p>
+    </div>
+
+    <!-- Facebook SDK -->
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '1469164717968670',
+                cookie: true,
+                xfbml: true,
+                version: 'v22.0'
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.setAttribute('defer', true);
+            js.src = 'https://connect.facebook.net/en_US/sdk.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        })(document, 'script', 'facebook-jssdk');
+
+        // Session info listener for embedded signup events
+        window.addEventListener('message', function (event) {
+            if (event.origin !== 'https://www.facebook.com') return;
+
+            try {
+                const data = JSON.parse(event.data);
+                console.log('[Embedded Signup Event]', data);
+
+                if (data.type === 'WA_EMBEDDED_SIGNUP') {
+                    const statusEl = document.getElementById('status');
+                    const detailsEl = document.getElementById('details');
+
+                    if (data.event === 'FINISH') {
+                        const wabaId = data.data?.waba_id;
+                        const phoneId = data.data?.phone_number_id;
+
+                        statusEl.className = 'success';
+                        statusEl.innerHTML = '✅ <strong>Coexistence setup complete!</strong><br>Your WhatsApp Business number is now connected to Cloud API.';
+
+                        detailsEl.style.display = 'block';
+                        detailsEl.innerHTML =
+                            '<strong>WABA ID:</strong> ' + (wabaId || 'N/A') + '<br>' +
+                            '<strong>Phone Number ID:</strong> ' + (phoneId || 'N/A') + '<br><br>' +
+                            '📝 <strong>Save these IDs!</strong> You need the Phone Number ID for your n8n workflow.';
+
+                    } else if (data.event === 'FINISH_ONLY_WABA') {
+                        statusEl.className = 'info';
+                        statusEl.innerHTML = 'ℹ️ WABA created but phone number not yet verified. Complete verification in WhatsApp Manager.';
+
+                        detailsEl.style.display = 'block';
+                        detailsEl.innerHTML = '<strong>WABA ID:</strong> ' + (data.data?.waba_id || 'N/A');
+
+                    } else if (data.event === 'CANCEL') {
+                        statusEl.className = 'error';
+                        statusEl.innerHTML = '❌ Setup was cancelled. Click the button to try again.';
+
+                    } else if (data.event === 'ERROR') {
+                        statusEl.className = 'error';
+                        statusEl.innerHTML = '❌ An error occurred: ' + JSON.stringify(data.data);
+                    }
+                }
+            } catch (e) {
+                // Non-JSON message, ignore
+            }
+        });
+
+        function launchWhatsAppSignup() {
+            const statusEl = document.getElementById('status');
+            statusEl.className = 'info';
+            statusEl.innerHTML = '⏳ Opening Facebook Login... Please complete the signup in the popup window.';
+
+            FB.login(
+                function (response) {
+                    if (response.authResponse) {
+                        const accessToken = response.authResponse.accessToken;
+                        console.log('[FB Login] Access Token:', accessToken);
+
+                        statusEl.className = 'info';
+                        statusEl.innerHTML = '⏳ Logged in! Processing signup results...';
+                    } else {
+                        console.log('[FB Login] User cancelled or did not authorize.');
+                        statusEl.className = 'error';
+                        statusEl.innerHTML = '❌ Login was cancelled or not authorized. Please try again.';
+                    }
+                },
+                {
+                    config_id: '818095821311199',
+                    response_type: 'code',
+                    override_default_response_type: true,
+                    extras: {
+                        setup: {
+                            // Coexistence: allow existing WhatsApp Business App numbers
+                            // Version 2 of Embedded Signup supports coexistence
+                        },
+                        featureType: 'whatsapp_embedded_signup',
+                        sessionInfoVersion: 2
+                    }
+                }
+            );
+        }
+    </script>
+</body>
+</html>
