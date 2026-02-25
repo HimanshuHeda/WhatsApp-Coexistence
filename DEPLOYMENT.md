@@ -1,4 +1,4 @@
-# GitHub Pages Deployment Instructions
+# GitHub Pages Deployment Instructions - FIXED 
 
 Your WhatsApp Coexistence Setup page is now ready for deployment to GitHub Pages! Follow these steps:
 
@@ -7,57 +7,37 @@ Your WhatsApp Coexistence Setup page is now ready for deployment to GitHub Pages
 - Git installed on your computer
 - Your project files (already prepared)
 
-## Step 1: Create a GitHub Repository
+## Step 1: Enable GitHub Pages (Repository Settings)
 
-1. Go to [GitHub](https://github.com) and sign in
-2. Click the "+" icon in the top right and select "New repository"
-3. Name your repository (e.g., `whatsapp-coexistence` or `octodo-whatsapp-setup`)
-4. Make sure it's set to **Public** (required for free GitHub Pages)
-5. **Don't** initialize with README, .gitignore, or license (we already have these)
-6. Click "Create repository"
+**IMPORTANT:** Since GitHub Actions may be disabled, we'll use the simpler branch deployment method.
 
-## Step 2: Upload Your Files
+1. Go to your repository on GitHub: `https://github.com/HimanshuHeda/WhatsApp-Coexistence`
+2. Click on the **"Settings"** tab
+3. Scroll down to **"Pages"** in the left sidebar
+4. Under **"Source"**, select **"Deploy from a branch"**
+5. Choose **"main"** branch
+6. Choose **"/ (root)"** folder
+7. Click **"Save"**
 
-Navigate to your project folder in terminal/command prompt:
+## Step 2: Push Current Files
 
-```bash
+```powershell
 cd "d:\WhatsApp Coexistence"
-```
-
-Initialize Git and add your files:
-
-```bash
-git init
 git add .
-git commit -m "Initial commit: WhatsApp Coexistence Setup page"
+git commit -m "Switch to branch deployment - remove Actions dependency"
+git push
 ```
 
-Connect to your GitHub repository (replace `YOUR_USERNAME` and `YOUR_REPO_NAME`):
+## Step 3: Access Your Live Site
 
-```bash
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-git push -u origin main
+After 2-5 minutes, your site will be available at:
 ```
-
-## Step 3: Enable GitHub Pages
-
-1. Go to your repository on GitHub
-2. Click on the "Settings" tab
-3. Scroll down to "Pages" in the left sidebar
-4. Under "Source", select "GitHub Actions"
-5. The deployment will start automatically
-
-## Step 4: Access Your Live Site
-
-After a few minutes, your site will be available at:
-```
-https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/
+https://himanshuheda.github.io/WhatsApp-Coexistence/
 ```
 
 ## Automatic Deployment
 
-Every time you push changes to the `main` branch, GitHub Actions will automatically redeploy your site.
+Every time you push changes to the `main` branch, GitHub Pages will automatically redeploy your site.
 
 ## Important Notes
 
