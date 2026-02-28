@@ -178,7 +178,7 @@
                 appId: '4266903466917572',
                 cookie: true,
                 xfbml: true,
-                version: 'v22.0'
+                version: 'v25.0'
             });
         };
 
@@ -261,13 +261,10 @@
                     config_id: '2158945614934036',
                     response_type: 'code',
                     override_default_response_type: true,
+                    scope: 'whatsapp_business_management,whatsapp_business_messaging',
                     extras: {
-                        setup: {
-                            // Coexistence: allow existing WhatsApp Business App numbers
-                            // Version 2 of Embedded Signup supports coexistence
-                        },
-                        featureType: 'whatsapp_embedded_signup',
-                        sessionInfoVersion: 2
+                    featureType: 'whatsapp_embedded_signup',
+                    sessionInfoVersion: 2
                     }
                 }
             );
